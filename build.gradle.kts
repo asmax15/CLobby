@@ -1,76 +1,68 @@
-import org.apache.commons.io.output.ByteArrayOutputStream
-import org.apache.tools.ant.filters.FixCrLfFilter
-import org.apache.tools.ant.filters.ReplaceTokens
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.5.10"
-    id("com.github.johnrengelman.shadow") version "7.0.0"
-    id("com.github.gmazzo.buildconfig") version "3.0.0"
+    kotlin("jvm") version "1.6.10"
+    id("com.github.johnrengelman.shadow") version "7.1.2"
+    id("org.jlleitschuh.gradle.ktlint") version "10.2.0"
+    id("io.papermc.paperweight.userdev") version "1.3.3"
 }
 
-group = "org.example"
+group = "me.asmax"
 version = "1.0.0"
 
 repositories {
-    maven(url = "https://papermc.io/repo/repository/maven-public/")
+    // remove when KSpigot 1.18.1 gets officially released
+    mavenLocal()
+    mavenCentral()
+    maven("https://repo.dmulloy2.net/repository/public/")
 }
-
-val minecraft_version: String by project
 
 dependencies {
     // PaperMC Dependency
-    compileOnly("com.destroystokyo.paper", "paper-api", "$minecraft_version-R0.1-SNAPSHOT")
+    paperDevBundle("1.18.1-R0.1-SNAPSHOT")
 
-    // Add your dependencies here
-    // Examples
-    // implementation("io.ktor", "ktor-client", "1.4.0") // Would be shaded into the final jar
-    // compileOnly("io.ktor", "ktor-client", "1.4.0") // Only used on compile time
+    // KSpigot dependency
+    // implementation("net.axay", "kspigot", "1.18.1")
+    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
+
+    // ProtocolLib
+    implementation("com.comphenix.protocol", "ProtocolLib", "4.7.0")
+
+    // Gson dependency
+    implementation("com.google.code.gson", "gson", "2.8.9")
+
+    // Brigadier dependency
+    implementation("com.mojang", "brigadier", "1.0.18")
+
+    // Kotlinx.Coroutines dependency
+    api("org.jetbrains.kotlinx", "kotlinx-coroutines-core", "1.6.0")
+    api("org.jetbrains.kotlinx", "kotlinx-coroutines-jdk8", "1.6.0")
 }
 
-buildConfig {
-    className("BuildConfig")
-    packageName("$group.$name")
-    val commit = getGitHash()
-    val branch = getGitBranch()
-    buildConfigField("String", "GIT_COMMIT", "\"$commit\"")
-    buildConfigField("String", "GIT_BRANCH", "\"$branch\"")
-}
-
-fun getGitHash(): String {
-    val stdout = ByteArrayOutputStream()
-    exec {
-        commandLine( "git", "rev-parse", "--short", "HEAD")
-        standardOutput = stdout
+kotlin {
+    jvmToolchain {
+        (this as JavaToolchainSpec).languageVersion.set(JavaLanguageVersion.of(17))
     }
-    return stdout.toString("UTF-8").trim()
-}
-
-fun getGitBranch(): String {
-    val stdout = ByteArrayOutputStream()
-    exec {
-        commandLine( "git", "rev-parse", "--abbrev-ref", "HEAD")
-        standardOutput = stdout
-    }
-    return stdout.toString("UTF-8").trim()
 }
 
 tasks {
-    processResources {
-        filter(FixCrLfFilter::class)
-        filter(ReplaceTokens::class, "tokens" to mapOf("version" to project.version))
-        filteringCharset = "UTF-8"
-    }
     jar {
         // Disabled, because we use the shadowJar task for building our jar
         enabled = false
     }
     build {
-        dependsOn(shadowJar)
+        dependsOn(reobfJar, shadowJar)
+    }
+    shadowJar {
     }
     withType<KotlinCompile> {
         kotlinOptions {
-            jvmTarget = "1.8"
+            jvmTarget = "17"
+            freeCompilerArgs = freeCompilerArgs + "-Xopt-in=kotlin.RequiresOptIn"
         }
+    }
+    withType<JavaCompile> {
+        options.encoding = "UTF-8"
+        options.release.set(17)
     }
 }

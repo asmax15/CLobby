@@ -1,6 +1,12 @@
-name: ExamplePlugin
-api-version: 1.16
+name: CLobby
+api-version: 1.18
 authors:
-  - Me
-main: com.example.exampleplugin
+  - AsMax
+main: me.asmax.clobby.CLobby
 version: @version@
+libraries:
+  - "org.jetbrains.kotlin:kotlin-stdlib:1.6.10"
+  - "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0"
+  - "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.6.0"
+  - "com.mojang:brigadier:1.0.18"
+  - "com.google.code.gson:gson:2.8.9"
