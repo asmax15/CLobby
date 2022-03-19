@@ -28,7 +28,7 @@ fun gamemodeGUI(locale: Locale): GUI<ForInventoryFiveByNine> = kSpigotGUI(GUITyp
         placeholder(Slots.Border, placeHolderItemGray)
         placeholder(Slots.RowTwoSlotTwo rectTo Slots.RowFourSlotEight, placeHolderItemWhite)
 
-        //TODO: Add GameModeSwitcher GUI
+        // TODO: Add GameModeSwitcher GUI
     }
 }
 
@@ -37,7 +37,7 @@ fun friendsGUI(locale: Locale): GUI<ForInventorySixByNine> = kSpigotGUI(GUIType.
         .color(Colors.FRIENDSGUI)
         .render(locale)
         .coloredString()
-    defaultPage =  GUIPage.friendsPageNumber
+    defaultPage = GUIPage.friendsPageNumber
 
     page(GUIPage.friendsPageNumber) {
         placeholder(Slots.Border, placeHolderItemGray)
