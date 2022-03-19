@@ -1,20 +1,20 @@
 package me.asmax.clobby
 
+import me.asmax.clobby.command.DefaultLanguageCommand
 import me.asmax.clobby.config.Config
 import me.asmax.clobby.extension.asTextColor
 import me.asmax.clobby.extension.coloredString
 import me.asmax.clobby.i18n.TranslationsProvider
-import me.asmax.clobby.listener.JoinListener
-import me.asmax.clobby.listener.QuitListener
+import me.asmax.clobby.listener.ConnectionListener
 import me.asmax.clobby.util.Colors
 import net.axay.kspigot.chat.KColors
 import net.axay.kspigot.chat.literalText
 import net.axay.kspigot.extensions.onlinePlayers
+import net.axay.kspigot.extensions.pluginManager
 import net.axay.kspigot.main.KSpigot
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.Component.text
 import net.kyori.adventure.text.Component.translatable
-import org.bukkit.Bukkit
 
 class CLobby : KSpigot() {
 
@@ -49,8 +49,11 @@ class CLobby : KSpigot() {
             logger.severe("It looks like you've reloaded, please restart instead!")
         }
 
-        registerCommands()
-        registerListener()
+        translationsProvider.registerTranslations()
+
+        pluginManager.registerEvents(ConnectionListener(), this)
+
+        DefaultLanguageCommand().register()
 
         val pluginDescription = this.description
 
@@ -96,16 +99,4 @@ class CLobby : KSpigot() {
             it.inventory.clear()
         }
     }
-
-    private fun registerCommands() {
-
-    }
-
-    private fun registerListener() {
-        val pluginManager = Bukkit.getPluginManager()
-
-        pluginManager.registerEvents(JoinListener(), this)
-        pluginManager.registerEvents(QuitListener(), this)
-    }
-
 }

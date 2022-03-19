@@ -22,12 +22,10 @@ class TranslationsProvider {
 
     fun registerTranslations() {
         val bundleNames = mutableListOf(
-            "translations.general.general",
             "translations.general.items",
             "translations.general.messages",
         )
         bundleNames.apply {
-
         }
 
         locales.forEach { locale ->

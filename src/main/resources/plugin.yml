@@ -3,7 +3,8 @@ api-version: 1.18
 authors:
   - AsMax
 main: me.asmax.clobby.CLobby
-version: @version@
+website: https://asmax.me
+version: 1.0.0
 libraries:
   - "org.jetbrains.kotlin:kotlin-stdlib:1.6.10"
   - "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0"

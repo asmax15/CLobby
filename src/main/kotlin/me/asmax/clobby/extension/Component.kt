@@ -1,7 +1,7 @@
 package me.asmax.clobby.extension
 
-import de.stckoverflw.stckutils.config.Config
-import de.stckoverflw.stckutils.util.Colors
+import me.asmax.clobby.config.Config
+import me.asmax.clobby.util.Colors
 import net.axay.kspigot.items.ItemMetaLoreBuilder
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.ComponentLike

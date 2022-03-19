@@ -17,4 +17,9 @@ object Colors {
     val SUCCESS_SECONDARY = ACTIVE
 
     val CONFIGURATION = KColors.MISTYROSE.asTextColor()
+
+    val LOBBYITEMS = KColors.ORANGE.asTextColor()
+    val GUI = KColors.GRAY.asTextColor()
+    val FRIENDSGUI = KColors.ORANGE.asTextColor()
+    val FRIEND = KColors.LIGHTCYAN.asTextColor()
 }

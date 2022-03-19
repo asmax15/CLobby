@@ -2,7 +2,7 @@ package me.asmax.clobby.config.impl
 
 import me.asmax.clobby.CLobby
 import me.asmax.clobby.config.AbstractConfig
-import java.util.*
+import java.util.Locale
 
 class LanguageConfig : AbstractConfig("languages.yml") {
 
