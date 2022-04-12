@@ -3,6 +3,7 @@ package me.asmax.clobby.command
 import com.mojang.brigadier.arguments.StringArgumentType
 import me.asmax.clobby.config.Config
 import me.asmax.clobby.config.data.FriendData
+import me.asmax.clobby.extension.successTranslatable
 import me.asmax.clobby.util.Permissions
 import net.axay.kspigot.commands.argument
 import net.axay.kspigot.commands.command
@@ -39,6 +40,19 @@ class FriendsCommand {
                             name
                         )
                     )
+                    player.sendMessage(
+                        successTranslatable(
+                            "Friend.add",
+                            player.name()
+                        )
+                    )
+                } else {
+                    requiresPermission(Permissions.FRIEND_SHOW)
+                    val friend = Config.friendDataConfig.friends.find {
+                        it.friendName == getArgument<String>("name")
+                    } ?: return@runs
+                    val friendUUID = friend.friendUUID
+                    // TODO: Open a GUI with the profile of the player
                 }
             }
         }

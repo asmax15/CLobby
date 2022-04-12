@@ -9,8 +9,7 @@ package me.asmax.clobby.extension
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.TextComponent
 import net.kyori.adventure.text.format.Style
-import java.util.Deque
-import java.util.LinkedList
+import java.util.*
 import java.util.regex.Pattern
 
 internal object ComponentSplitting {

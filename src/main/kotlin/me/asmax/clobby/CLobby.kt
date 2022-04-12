@@ -1,6 +1,7 @@
 package me.asmax.clobby
 
 import me.asmax.clobby.command.DefaultLanguageCommand
+import me.asmax.clobby.command.FriendsCommand
 import me.asmax.clobby.config.Config
 import me.asmax.clobby.extension.asTextColor
 import me.asmax.clobby.extension.coloredString
@@ -49,11 +50,14 @@ class CLobby : KSpigot() {
             logger.severe("It looks like you've reloaded, please restart instead!")
         }
 
+        Config.reloadFriends()
+
         translationsProvider.registerTranslations()
 
         pluginManager.registerEvents(ConnectionListener(), this)
 
         DefaultLanguageCommand().register()
+        FriendsCommand().register()
 
         val pluginDescription = this.description
 
